@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
     <div>
-    <p>Name: {{ object.name }}</p>
-    <p>Description: {{ object.description }}</p>
-    <p>Created at: {{ object.created_at}}</p>
+        <p>Name: {{ object.name }}</p>
+        <p>Description: {{ object.description }}</p>
+        {#        <p>Description: {{ object.description|safe }}</p>#}
+        <p>Created at: {{ object.created_at }}</p>
+        {#        <p>Created at: {{ object.created_at|date:"c" }}</p>#}
+        {#        <p>Created at: {{ object.created_at|date:"b" }}</p>#}
+        {#        <p>Created at: {{ object.created_at|date:"d" }}</p>#}
+        {#        <p>Created at: {{ object.created_at|date:"y" }}</p>#}
+        <img src='{{ object.logo.url }}' alt='Logo'>
     </div>
     <a href='{% url 'projects-list' %}'>back to projects list</a> |
     <a href='{% url 'projects-update' object.id %}'>update project</a> |
     <a href='{% url 'projects-delete' object.id %}'>delete project</a>
-</body>
-</html>
+{% endblock content %}

@@ -17,6 +17,22 @@ def dynamic_template_view(request, page):
         raise http.Http404()
 
 
+class AboutView(generic.TemplateView):
+    template_name = 'about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cities'] = [
+            {'name': 'Mumbai', 'population': '19,000,000', 'country': 'India'},
+            {'name': 'Calcutta', 'population': '15,000,000',
+             'country': 'India'},
+            {'name': 'New York', 'population': '20,000,000', 'country': 'USA'},
+            {'name': 'Chicago', 'population': '7,000,000', 'country': 'USA'},
+            {'name': 'Tokyo', 'population': '33,000,000', 'country': 'Japan'},
+        ]
+        return context
+
+
 class ProjectListView(generic.ListView):
     model = models.Project
     template_name = 'project_list.html'
@@ -41,6 +57,7 @@ class ProjectCreateView(generic.CreateView):
     fields = [
         'name',
         'description',
+        'logo',
     ]
     template_name = 'project_create.html'
 

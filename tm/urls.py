@@ -1,6 +1,7 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from django.views import generic
 
 from dashboard import views
 
@@ -16,14 +17,14 @@ urlpatterns = [
     ),
     path(
         'about/',
-        generic.TemplateView.as_view(template_name='about.html')
+        views.AboutView.as_view(),
+        name='about',
     ),
     path(
         'about/<str:page>/',
         views.dynamic_template_view
     ),
 
-    # projects
     path(
         'projects/',
         views.ProjectListView.as_view(),
@@ -54,4 +55,5 @@ urlpatterns = [
         views.SolarSystemView.as_view(),
         name='solar-system',
     ),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

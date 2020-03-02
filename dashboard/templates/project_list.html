@@ -1,42 +1,30 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <div>
-        <h1>Total projects: {{ count }}</h1>
-        <a href="{% url 'projects-create' %}">New +</a>
-    </div>
+{% extends 'layout.html' %}
+{% load dashboard_tags %}
+{% block content %}
     <div>
         <div>
-            <h4>Project list:</h4>
+            <h1>Total projects: {{ count }} on It is {% now "jS F Y H:i" %}</h1>
+            <a href="{% url 'projects-create' %}">New +</a>
         </div>
-        {% for obj in object_list %}
+        <div>
             <div>
-                {{ obj.name }} |
-                <a href='{{ obj.get_absolute_url }}'>link</a>
+                <h4>Project list:</h4>
             </div>
-        {% endfor %}
-    </div>
-
-    {% if is_paginated %}
-        <div class="pagination">
-          <span class="page-links">
-              {% if page_obj.has_previous %}
-                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-              {% endif %}
-              <span class="page-current">
-                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-              </span>
-              {% if page_obj.has_next %}
-                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-              {% endif %}
-          </span>
+            {% for obj in object_list %}
+                <div>
+                    {{ obj.name }} |
+{#                    {{ obj.name|upper }} |#}
+                    {{ obj.name|upper|cut:"O" }} |
+                    <a href='{{ obj.get_absolute_url }}'>link</a>
+                </div>
+            {% endfor %}
         </div>
-    {% endif %}
-</div>
-</body>
-</html>
+
+        {% comment "Optional note" %}
+            <p>Commented out text with </p>
+        {% endcomment %}
+
+
+        {% include 'pagination.html' %}
+    </div>
+{% endblock content %}

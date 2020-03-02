@@ -14,6 +14,7 @@ class Project(models.Model):
     created_at = models.DateField(
         auto_now=True
     )
+    logo = models.FileField(null=True, upload_to='logos')
 
     def get_absolute_url(self):
         return urls.reverse('projects-detail', args=[str(self.id)])
