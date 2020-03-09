@@ -3,7 +3,8 @@
 {% block content %}
     <div>
         <div>
-            <h1>Total projects: {{ count }} on It is {% now "jS F Y H:i" %}</h1>
+            <h1>Total projects: {{ count }} on It
+                is {% now "jS F Y H:i" %}</h1>
             <a href="{% url 'projects-create' %}">New +</a>
         </div>
         <div>
@@ -13,8 +14,6 @@
             {% for obj in object_list %}
                 <div>
                     {{ obj.name }} |
-{#                    {{ obj.name|upper }} |#}
-                    {{ obj.name|upper|cut:"O" }} |
                     <a href='{{ obj.get_absolute_url }}'>link</a>
                 </div>
             {% endfor %}
@@ -23,7 +22,6 @@
         {% comment "Optional note" %}
             <p>Commented out text with </p>
         {% endcomment %}
-
 
         {% include 'pagination.html' %}
     </div>

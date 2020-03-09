@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
+from authentication import views as auth_views
 from dashboard import views
 
 urlpatterns = [
@@ -25,6 +26,19 @@ urlpatterns = [
         views.dynamic_template_view
     ),
 
+    # auth
+    path(
+        'login/',
+        auth_views.LoginView.as_view(),
+        name='login',
+    ),
+    path(
+        'logout/',
+        auth_views.LogoutView.as_view(),
+        name='logout',
+    ),
+
+    # projects
     path(
         'projects/',
         views.ProjectListView.as_view(),
@@ -50,10 +64,11 @@ urlpatterns = [
         views.ProjectDeleteView.as_view(),
         name='projects-delete'
     ),
+
     path(
-        'solar-system',
-        views.SolarSystemView.as_view(),
-        name='solar-system',
+        'contact-us/',
+        views.ContactUsView.as_view(),
+        name='contact-us'
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

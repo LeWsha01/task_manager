@@ -8,6 +8,13 @@
 <div>
     <div>
         <h1>Awesome Dashboard!</h1>
+        {% if user.is_authenticated %}
+            <form action='/logout/' method='post'>{% csrf_token %}
+                <input type='submit' value='logout'>
+            </form>
+        {% else %}
+            <a href='{% url 'login' %}'>login</a>
+        {% endif %}
     </div>
     <div>
         {% block content %}{% endblock content %}

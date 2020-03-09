@@ -1,9 +1,10 @@
 from django import http, urls
 from django import template
 from django import shortcuts
+from django.contrib.auth import decorators, mixins
 from django.views import generic
 
-from dashboard import models
+from dashboard import models, forms
 
 
 def simple_view(request):
@@ -33,10 +34,11 @@ class AboutView(generic.TemplateView):
         return context
 
 
-class ProjectListView(generic.ListView):
+class ProjectListView(mixins.LoginRequiredMixin, generic.ListView):
     model = models.Project
     template_name = 'project_list.html'
     paginate_by = 5
+    login_url = '/login/'
 
     def get_queryset(self):
         return models.Project.objects.all()
@@ -77,5 +79,13 @@ class ProjectDeleteView(generic.DeleteView):
     template_name = 'project_delete.html'
 
 
-class SolarSystemView(generic.TemplateView):
-    template_name = 'solar-system.html'
+class ContactUsView(generic.FormView):
+    form_class = forms.ConstuctUsForm
+    template_name = 'contact_us.html'
+
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        message = form.cleaned_data['message']
+        recipients = [form.cleaned_data['email']]
+        # send_mail(subject, message, sender, recipients)
+        return http.HttpResponseRedirect('/projects/')
